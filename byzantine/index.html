@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+    <title>ByzantineGPT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="" />
+    <style>
+@import "https://fonts.googleapis.com/css2?family=Inconsolata&display=swap";:root{--cursor-visibility:hidden}html,body{width:100%;height:100%;overflow:auto;font-family:inconsolata,monospace;font-size:4vmin;line-height:4.1vmin;font-weight:400}body{margin:0;display:flex;flex-direction:row;justify-content:center;align-items:center}#content{min-width:82vmin;min-height:82vmin}::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{border-radius:10px;box-shadow:inset 0 0 1px white}::-webkit-scrollbar-thumb{border-radius:10px;box-shadow:0 0 0 1px white}.cursor,#activity-title:after,#activity-content:after,#cd:after,#whoami:after,#cat:after,#tree:after{visibility:var(--cursor-visibility);content:"|";overflow:hidden;color:#fff;animation:blink 500ms linear infinite alternate}@keyframes blink{0%{opacity:0}100%{opacity:1}}@media only screen and (min-width:768px){body{font-size:2.5vmin;line-height:2.6vmin}#content{min-width:60vmin}}:root{--cursor-visibility:hidden}body{align-items:unset;overflow-y:scroll}#content{max-width:80vmin}pre{overflow-x:scroll;white-space:pre}@keyframes blink{0%{opacity:0}100%{opacity:1}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+body{background:#3d6954}body #terminal{color:#ebdbb2}body #user{color:#c2cdc3}body #dir{color:#2d2d2d}body .Typewriter__cursor{color:#ebdbb2}a{color:#ebdbb2}
+
+        
+.navFull {
+    background-color: #000000;
+    font-family: "Courier New";
+    font-size: 17px;
+    display: inline;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding-top: 5px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navCredits {
+    float: right;
+    padding-right: 18px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+#content::after {
+    content: "\a\a";
+    white-space: pre;
+}
+        
+        
+</style>
+
+
+
+</head><body><div id="content">
+    
+    
+    
+
+
+    <span id="activity-title"></span> <br>
+ <span id="activity-content"></span> <br>
+
+<script type="text/javascript">
+    async function typewriter(text, elementId, waitAfter) {
+        var n = 0,
+            isTag = false
+        addText = "";
+        const el = document.getElementById(elementId);
+
+        const wait = () => new Promise(r => setTimeout(r, waitAfter));
+        const nowait = () => new Promise(r => r());
+
+        const render = () => el.innerHTML = (text.slice(0, n + 1) + addText);
+
+        const cursor = document.createElement('span');
+        cursor.id = "blink";
+
+        el.style.setProperty("--cursor-visibility", "visible");
+        while (n < text.length) {
+            if (text.charAt(n + 1) === "<") isTag = true;
+            if (text.charAt(n + 1) === ">") isTag = false;
+
+            if (isTag) {
+                n++;
+                continue;
+            }
+
+            requestAnimationFrame(render);
+
+            if (waitAfter === 0) {
+                await nowait();
+            } else {
+                await wait();
+            }
+
+            n++;
+        }
+        el.style.setProperty("--cursor-visibility", "collapse");
+    }
+
+    function parseDelay(d) {
+        const parsed = parseInt(d, 10);
+        if (isNaN(parsed)) return 0;
+        return parsed;
+    }
+
+    const titleDelay = parseDelay("0"),
+        contentDelay = parseDelay("0");
+    const typeeffetct = async () => {
+        await typewriter("\u003cspan id=\u0027terminal\u0027\u003e\u003ch1 id=\u0027title\u0027\u003eByzantineGPT\u003c\/h1\u003e\u003c\/span\u003e", "activity-title", titleDelay);
+        await typewriter("\u003cspan id=\u0027terminal\u0027\u003e\u003cp\u003eByzantineGPT is a shell script that uses some prompt engineering and nifty bash scripting to give you different modes.\u003c\/p\u003e\n\u003cp\u003eEvery mode is unique and, though, at times, the core essence of the answer remains the same, the way it is presented is starkly different.\u003c\/p\u003e\n\u003cp\u003eThe different modes are:\u003c\/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eVanillaGPT\u003c\/strong\u003e : Your good ole policy-abiding GPT model.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eWriterGPT\u003c\/strong\u003e : A mode engineered to give results that AI classifiers cannot discern from Human Writing.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eTechnical Assistant\u003c\/strong\u003e : A mode that has been crafted to leave no stone unturned when it comes to Technical Issues. Unlike your \u003cstrong\u003ethickly\u003c\/strong\u003e accented Indian Technical Assistant, this mode will not request payment via gift cards.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eHackerman\u003c\/strong\u003e : If GPT was raised by a single-mother.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003ethewaywardgpt\u003c\/strong\u003e : If GPT read Nietzsche and Schopenhauer instead of jacking off to loli-hentai.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eWaifuGPT\u003c\/strong\u003e : A neckbeard\u0026rsquo;s final attempt to get a girl-friend.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eParanoidGPT\u003c\/strong\u003e : If GPT was fed data from \u0026lsquo;Infowars\u0026rsquo;, \u0026lsquo;Piers Morgan Uncensored\u0026rsquo; and Andrew Tate videos.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eFOSSuggest\u003c\/strong\u003e : A replacement to your homie that goes by the pronouns \u0026lsquo;GNU\/Linux\u0026rsquo;.\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003cp\u003eI request you all to use the script judiciously. \u003cem\u003ePfft!\u003c\/em\u003e who am I kidding. You sick fucks can do whatever the fuck you want to do as long as you are not using Microsoft Windows. If you do, however, use Windows, then you might as well lock your dick in a chastity cage and become a sissy femboy.\u003c\/p\u003e\n\u003c\/span\u003e", "activity-content", contentDelay);
+        return;
+    }
+
+    typeeffetct()
+</script>
+
+        </div>
+        
+        <span class="navFull">
+        
+    
+    
+
+    
+        
+
+<span>
+    <a href="/">Home</a>
+    <span>&#8192;|&#8192;</span>
+    <a href="./..">/</a>
+</span>
+
+    
+
+        
+        <span class="navCredits">
+            
+            <a href="https://www.fsf.org/" target="_blank" rel="noopener">FSF</a>
+        </span>
+</span>
+
+        
+         
+    </body>
+</html>

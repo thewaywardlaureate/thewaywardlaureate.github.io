@@ -8,6 +8,27 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 24 Feb 2023 19:08:57 +0530</lastBuildDate><atom:link href="https://thewaywardlaureate.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>ByzantineGPT</title>
+      <link>https://thewaywardlaureate.github.io/byzantine/</link>
+      <pubDate>Thu, 23 Mar 2023 22:28:18 +0530</pubDate>
+      
+      <guid>https://thewaywardlaureate.github.io/byzantine/</guid>
+      <description>ByzantineGPT is a shell script that uses some prompt engineering and nifty bash scripting to give you different modes.
+Every mode is unique and, though, at times, the core essence of the answer remains the same, the way it is presented is starkly different.
+The different modes are:
+VanillaGPT : Your good ole policy-abiding GPT model. WriterGPT : A mode engineered to give results that AI classifiers cannot discern from Human Writing.</description>
+    </item>
+    
+    <item>
+      <title>Kawaii-Shit</title>
+      <link>https://thewaywardlaureate.github.io/stickers/</link>
+      <pubDate>Wed, 01 Mar 2023 02:28:30 +0530</pubDate>
+      
+      <guid>https://thewaywardlaureate.github.io/stickers/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
       <title>001</title>
       <link>https://thewaywardlaureate.github.io/chadgpt/story1/</link>
       <pubDate>Fri, 24 Feb 2023 19:08:57 +0530</pubDate>
