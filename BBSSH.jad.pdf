@@ -6,84 +6,81 @@ MicroEdition-Configuration: CLDC-1.1
 MIDlet-1: ,,
 RIM-MIDlet-Flags-1: 0
 Manifest-Version: 1.0
-RIM-COD-Creation-Time: 1325362347
+RIM-COD-Creation-Time: 1325362374
 RIM-COD-Module-Name: BBSSH
 RIM-COD-Module-Dependencies: net_rim_cldc,net_rim_os,BBSSH_Common
 RIM-COD-URL: BBSSH.cod
-RIM-COD-SHA1:  e5 77 65 48 e9 4d 35 42 45 36 47 76 87 e7 41 99 df a2 17 a2
-RIM-COD-Size: 7908
+RIM-COD-SHA1:  6a 56 91 fd 80 bc 7c 74 86 e3 aa 7c 69 f7 e2 d5 0e 35 11 8d
+RIM-COD-Size: 7904
 RIM-COD-URL-1: BBSSH_Common.cod
-RIM-COD-SHA1-1:  c8 2c a4 30 3b 3f 8d 88 b2 a7 0c 8c b8 dd 29 f2 bb 43 29 df
-RIM-COD-Size-1: 87948
+RIM-COD-SHA1-1:  a4 f0 ca f5 95 de 52 a3 4b 29 0e 7a a2 9b 41 c0 42 c1 41 b4
+RIM-COD-Size-1: 87684
 RIM-COD-URL-2: BBSSH_Common-1.cod
-RIM-COD-SHA1-2:  1c 88 90 56 d5 ae 8e 0f 12 09 56 2b 74 8c 9c 2d 23 68 56 05
-RIM-COD-Size-2: 96188
+RIM-COD-SHA1-2:  73 c5 79 02 56 c6 50 f9 6f 19 05 ab d2 00 2f 47 66 11 95 6e
+RIM-COD-Size-2: 96164
 RIM-COD-URL-3: BBSSH_Common-2.cod
-RIM-COD-SHA1-3:  80 d6 4a 59 38 21 76 24 02 db bc 14 64 4f 15 3e bf a6 fb c3
-RIM-COD-Size-3: 60244
+RIM-COD-SHA1-3:  8f 9a c2 62 07 3d 38 d9 52 3b 01 c9 04 65 ed 1f 7d c6 5b 96
+RIM-COD-Size-3: 60348
 RIM-COD-URL-4: BBSSH_Common-3.cod
-RIM-COD-SHA1-4:  97 03 d8 ed c1 05 d8 eb f5 a9 1c c4 d6 b2 c5 00 f1 9c ec 72
-RIM-COD-Size-4: 39040
+RIM-COD-SHA1-4:  6b e2 b2 29 c7 7a 7b 09 11 dd 35 6e 9e b1 99 a8 99 91 09 df
+RIM-COD-Size-4: 39000
 RIM-COD-URL-5: BBSSH_Common_46.cod
-RIM-COD-SHA1-5:  01 68 12 27 94 3f 60 da 59 f0 32 c5 ea e6 34 b0 5c 5e 9c d5
-RIM-COD-Size-5: 3468
+RIM-COD-SHA1-5:  30 76 a8 a4 03 83 0a 46 0d b3 77 05 6f 05 7b 06 17 7b 6a 8a
+RIM-COD-Size-5: 3460
 RIM-COD-URL-6: BBSSH_Common_47.cod
-RIM-COD-SHA1-6:  4e 4d 58 bf 33 fc 9d ff b1 69 24 ec ae ac b1 fb 75 40 1c 4e
-RIM-COD-Size-6: 5712
+RIM-COD-SHA1-6:  ef 61 68 d1 1f 09 a9 e9 54 17 6f 35 7d fc ab dd 7a 42 46 9c
+RIM-COD-Size-6: 5700
 RIM-COD-URL-7: BBSSH_Common_50.cod
-RIM-COD-SHA1-7:  12 5b 99 21 77 d0 da 25 ca a8 96 37 c3 ea c2 aa 56 2f ab b2
-RIM-COD-Size-7: 3788
+RIM-COD-SHA1-7:  7d 7c dc 73 26 c9 e9 ae 7d e9 34 f9 fd 64 7a dd a0 38 5e 41
+RIM-COD-Size-7: 3780
 RIM-COD-URL-8: BBSSH_Common_60.cod
-RIM-COD-SHA1-8:  75 04 b0 48 24 b7 7f f9 d0 61 82 4e cb 84 b4 1a c3 6f a7 c3
-RIM-COD-Size-8: 8472
+RIM-COD-SHA1-8:  27 27 8a 42 4d c7 f8 80 da 22 21 5a eb 37 ba e4 69 23 36 05
+RIM-COD-Size-8: 8440
 RIM-COD-URL-9: BBSSH_Common_70.cod
-RIM-COD-SHA1-9:  c8 3c d0 ea da ca 8a e6 36 bb 7c 5e 3d 35 7d 06 12 79 54 c0
-RIM-COD-Size-9: 1240
-RIM-COD-URL-10: BBSSH_Common_71.cod
-RIM-COD-SHA1-10:  c5 e4 b9 45 e0 96 ff 2b d1 0f 59 80 37 9c 1b c3 c0 51 72 85
-RIM-COD-Size-10: 1240
-RIM-COD-URL-11: BBSSH_Resources.cod
-RIM-COD-SHA1-11:  88 1b b5 31 9f d4 8d e4 2f e7 7d 51 db 53 59 7f 0c b7 ea 97
-RIM-COD-Size-11: 49224
-RIM-COD-URL-12: BBSSH_Resources-1.cod
-RIM-COD-SHA1-12:  d0 58 7e 0f da e0 4e 1e 8d 23 e7 20 5f bc bf 19 5d 18 68 44
-RIM-COD-Size-12: 50648
-RIM-COD-URL-13: BBSSH_Resources-10.cod
-RIM-COD-SHA1-13:  c5 92 7a e7 e8 dc 68 e8 d4 19 88 37 b7 7b 37 e9 c4 39 a0 7d
-RIM-COD-Size-13: 58112
-RIM-COD-URL-14: BBSSH_Resources-11.cod
-RIM-COD-SHA1-14:  67 1e 68 f1 24 94 82 a5 db 90 af 52 97 42 49 0b 93 e5 86 e9
-RIM-COD-Size-14: 40912
-RIM-COD-URL-15: BBSSH_Resources-12.cod
-RIM-COD-SHA1-15:  b4 33 1d 28 e4 32 e3 98 f1 69 20 88 56 d4 62 d6 7f b4 e6 c8
-RIM-COD-Size-15: 57908
-RIM-COD-URL-16: BBSSH_Resources-13.cod
-RIM-COD-SHA1-16:  e7 f8 8e 7e fb 86 85 f2 c7 e7 c3 b3 e5 f1 65 0b 7f 9b b8 83
-RIM-COD-Size-16: 45888
-RIM-COD-URL-17: BBSSH_Resources-14.cod
-RIM-COD-SHA1-17:  ed 22 87 f3 85 d3 68 97 af 1e b6 2c dc 4e a4 bc 9b 42 c4 f7
-RIM-COD-Size-17: 36640
-RIM-COD-URL-18: BBSSH_Resources-2.cod
-RIM-COD-SHA1-18:  52 a8 a0 8f 9f f3 f9 18 dd 25 aa ea f6 0f 2c 96 e9 e7 67 b8
-RIM-COD-Size-18: 57312
-RIM-COD-URL-19: BBSSH_Resources-3.cod
-RIM-COD-SHA1-19:  d7 f2 7d 34 47 68 d5 b0 f2 af b3 5e 73 7e 27 a3 3d ca 54 be
-RIM-COD-Size-19: 32248
-RIM-COD-URL-20: BBSSH_Resources-4.cod
-RIM-COD-SHA1-20:  aa 44 85 bf 0d 54 a1 08 05 d5 c8 be 7b d5 36 29 bd f0 5c 40
-RIM-COD-Size-20: 49548
-RIM-COD-URL-21: BBSSH_Resources-5.cod
-RIM-COD-SHA1-21:  dd a8 e2 43 aa fe 60 ab ed 17 c7 a5 13 6f f9 95 cc 86 5d 10
-RIM-COD-Size-21: 57704
-RIM-COD-URL-22: BBSSH_Resources-6.cod
-RIM-COD-SHA1-22:  e9 bf be c1 7a aa f4 cb 31 5e e8 e7 b4 66 c5 9b e0 43 24 c5
-RIM-COD-Size-22: 50420
-RIM-COD-URL-23: BBSSH_Resources-7.cod
-RIM-COD-SHA1-23:  0e 7b 77 c9 b0 d3 92 71 6f bd ea a9 52 97 c1 c2 6d b1 46 9b
-RIM-COD-Size-23: 54092
-RIM-COD-URL-24: BBSSH_Resources-8.cod
-RIM-COD-SHA1-24:  19 fb f7 a6 04 24 d8 05 e5 f8 21 7f c2 17 42 58 dc ef b3 4a
-RIM-COD-Size-24: 51792
-RIM-COD-URL-25: BBSSH_Resources-9.cod
-RIM-COD-SHA1-25:  4a df e5 e1 0c d3 7d 4d 9c 8d 08 8a 2b 7c e9 91 28 11 90 3a
-RIM-COD-Size-25: 53980
+RIM-COD-SHA1-9:  48 3f e8 35 ac 79 1a d1 3e 7e 3e 85 2b 5a 9f 78 e2 29 79 53
+RIM-COD-Size-9: 1236
+RIM-COD-URL-10: BBSSH_Resources.cod
+RIM-COD-SHA1-10:  7b 37 b4 0f 8c 15 d0 77 08 75 27 dc be e7 49 10 6a 11 f5 b1
+RIM-COD-Size-10: 49220
+RIM-COD-URL-11: BBSSH_Resources-1.cod
+RIM-COD-SHA1-11:  6e cb 9a aa 6d 4e 62 07 82 c0 18 da 11 ad b6 d9 a3 cb bd 3b
+RIM-COD-Size-11: 50648
+RIM-COD-URL-12: BBSSH_Resources-10.cod
+RIM-COD-SHA1-12:  d1 a9 4a 74 f8 44 7b 8f 5a c1 60 f8 f3 36 3d 00 8d b5 08 95
+RIM-COD-Size-12: 58112
+RIM-COD-URL-13: BBSSH_Resources-11.cod
+RIM-COD-SHA1-13:  db 11 5a 6d 91 05 25 44 60 7f ab c1 5e fe 40 e1 15 3c 65 df
+RIM-COD-Size-13: 40912
+RIM-COD-URL-14: BBSSH_Resources-12.cod
+RIM-COD-SHA1-14:  d1 ac 65 83 80 6c 45 92 bf 7f ca 99 74 53 00 0e c3 e8 e1 4d
+RIM-COD-Size-14: 57908
+RIM-COD-URL-15: BBSSH_Resources-13.cod
+RIM-COD-SHA1-15:  58 f7 f2 2f a5 cf f2 f7 5f cc d5 f4 d9 d4 58 0a c8 ab 7e 0d
+RIM-COD-Size-15: 45888
+RIM-COD-URL-16: BBSSH_Resources-14.cod
+RIM-COD-SHA1-16:  d1 dd 7d 59 16 73 98 58 41 5a 4c f3 d8 1c 12 86 d6 85 9c 1f
+RIM-COD-Size-16: 36640
+RIM-COD-URL-17: BBSSH_Resources-2.cod
+RIM-COD-SHA1-17:  dc 74 73 e5 82 c7 d5 10 e3 9b fc cb 6f 07 2d dc b2 f3 60 4d
+RIM-COD-Size-17: 57312
+RIM-COD-URL-18: BBSSH_Resources-3.cod
+RIM-COD-SHA1-18:  6f 45 28 17 d3 52 c7 87 89 75 bb e3 00 f1 4c bb 6a 01 b9 a6
+RIM-COD-Size-18: 32248
+RIM-COD-URL-19: BBSSH_Resources-4.cod
+RIM-COD-SHA1-19:  24 8a 0a c5 29 d3 a4 d7 08 5a 24 d9 47 d5 ab ac f3 4f ff a9
+RIM-COD-Size-19: 49548
+RIM-COD-URL-20: BBSSH_Resources-5.cod
+RIM-COD-SHA1-20:  68 2a 48 91 79 6b 0c 9b 82 a0 9a 1f ad b8 29 9a f9 20 84 c7
+RIM-COD-Size-20: 57704
+RIM-COD-URL-21: BBSSH_Resources-6.cod
+RIM-COD-SHA1-21:  16 96 69 8a 99 ad e8 ec de 7e 6a 68 6c 5a 7a 9f 0d 19 e1 e8
+RIM-COD-Size-21: 50420
+RIM-COD-URL-22: BBSSH_Resources-7.cod
+RIM-COD-SHA1-22:  d0 c6 74 73 10 8d 71 41 59 c9 d0 0c 92 e3 89 6e 78 27 35 ba
+RIM-COD-Size-22: 54092
+RIM-COD-URL-23: BBSSH_Resources-8.cod
+RIM-COD-SHA1-23:  1c 46 10 e8 91 d6 e5 c8 b0 1d 93 65 54 5a 74 1b ba ea 2b 47
+RIM-COD-Size-23: 51792
+RIM-COD-URL-24: BBSSH_Resources-9.cod
+RIM-COD-SHA1-24:  90 86 90 0e ad c5 98 f5 a5 5f 18 d2 6a 2d 56 1c 6f df 1b a1
+RIM-COD-Size-24: 53980
