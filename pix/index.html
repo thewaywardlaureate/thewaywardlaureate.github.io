@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="src/css/font_awesome.css">
+  <title>Pixelearn Ed Hub</title>
+  <meta name="description" content="Pixelearn Ed Hub - Dynamic, inclusive, future-ready learning platform" />
+  <script src="src/javascript/3.4.17.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: { colors: { primary: '#064e3b' } }
+      }
+    };
+  </script>
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+
+  <!-- Navbar -->
+  <nav class="bg-white dark:bg-gray-800 fixed w-full top-0 z-50 shadow">
+    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+    <div class="flex items-center space-x-2">
+        <a href="#placeholder-link"><img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-10 w-auto" /></a>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="#about" class="hover:text-primary"><strong>About Us</strong></a>
+        <a href="#courses" class="hover:text-primary"><strong>Courses</strong></a>
+        <a href="#ugcnet" class="hover:text-primary"><strong>UGC NET Info</strong></a>
+        <a href="#batches" class="hover:text-primary"><strong>Batches</strong></a>
+        <a href="#why-choose-us" class="hover:text-primary"><strong>Why Choose Us</strong></a>
+        <a href="#faculty" class="hover:text-primary"><strong>Our Faculty</strong></a>
+        <a href="hide-and-seek.html" class="hover:text-primary"><strong>Hide and Seek</strong></a>
+        <a href="#contact-form" class="hover:text-primary"><strong>Contact</strong></a>
+      </div>
+      <button id="darkModeToggle" class="ml-4 p-2 rounded">
+        <span id="darkIcon">🌙</span>
+        <span id="lightIcon" class="hidden">☀️</span>
+      </button>
+    </div>
+  </nav>
+  <div class="h-16"></div>
+
+  
+
+<!-- Hero Slider -->
+<section class="relative overflow-hidden h-screen bg-black">
+  <div class="slider relative w-full h-full overflow-hidden flex items-center justify-center">
+    <div class="slides flex transition-transform duration-700" style="width: 500%;">
+      
+<div class="w-full flex-shrink-0 flex items-center justify-between h-full bg-black px-8 py-8">
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+  <img src="assets/posters/poster1.jpg" class="max-h-[85vh] max-w-[60vw] md:max-w-[50vw] object-contain flex-shrink-0" />
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+</div>
+
+
+<div class="w-full flex-shrink-0 flex items-center justify-between h-full bg-black px-8 py-8">
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+  <img src="assets/posters/poster2.jpg" class="max-h-[85vh] max-w-[60vw] md:max-w-[50vw] object-contain flex-shrink-0" />
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+</div>
+
+
+<div class="w-full flex-shrink-0 flex items-center justify-between h-full bg-black px-8 py-8">
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+  <img src="assets/posters/poster3.jpg" class="max-h-[85vh] max-w-[60vw] md:max-w-[50vw] object-contain flex-shrink-0" />
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+</div>
+
+
+<div class="w-full flex-shrink-0 flex items-center justify-between h-full bg-black px-8 py-8">
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+  <img src="assets/posters/poster4.jpg" class="max-h-[85vh] max-w-[60vw] md:max-w-[50vw] object-contain flex-shrink-0" />
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+</div>
+
+
+<div class="w-full flex-shrink-0 flex items-center justify-between h-full bg-black px-8 py-8">
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+  <img src="assets/posters/poster5.jpg" class="max-h-[85vh] max-w-[60vw] md:max-w-[50vw] object-contain flex-shrink-0" />
+  <img src="assets/logo/logo.png" alt="Pixelearn Logo" class="h-32 w-auto opacity-20 hidden md:block" />
+</div>
+
+    </div>
+    <!-- Navigation buttons -->
+    <button class="prev absolute top-1/2 left-4 -translate-y-1/2 bg-gray-800/50 text-white p-2 rounded z-20">❮</button>
+    <button class="next absolute top-1/2 right-4 -translate-y-1/2 bg-gray-800/50 text-white p-2 rounded z-20">❯</button>
+  </div>
+</section>
+
+
+
+  <!-- About Us -->
+  <section id="about" class="py-16 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-4">About Us</h2>
+    <p class="text-gray-600 dark:text-gray-300">
+      PIXELEARN Ed Hub is an academic initiative founded by a group of passionate educators and researchers, with the vision of transforming education into a dynamic, inclusive, and future-ready experience.
+      Designed for learners at every stage, the platform supports preparation for competitive exams, development of real-world skills, exploration of artificial intelligence, and solutions for academic challenges.
+      With expert guidance and innovative tools, Pixelearn empowers progress—every pixel, every step.
+    </p>
+  </section>
+
+  <!-- Courses -->
+  <section id="courses" class="py-16 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center">Our Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+          <h3><b>UGC NET Coaching (Paper I & Paper II – English)</b></h3>
+          &nbsp;
+          <p>Strategic coaching to conquer the UGC NET. Empowering aspirants with expert-led sessions, precision-crafted study materials, and personalized mentorship, this program delivers everything needed to master both Paper I (General Aptitude) and Paper II (English). Designed for results, built for excellence.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+          <h3><b>AI-Powered Learning Courses</b></h3>
+          &nbsp;
+          <p>Innovative courses that integrate artificial intelligence into the learning process. Learners gain insights into AI tools, techniques, and applications—enhancing study efficiency and future-readiness.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+          <h3><b>Skill-Based Programs</b></h3>
+          &nbsp;
+          <p>Practical training modules focused on building essential skills for academic, professional, and personal growth. Programs cover communication, reasoning, digital literacy, and more.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+          <h3><b>Hide and Seek</b></h3>
+          &nbsp;
+          <p>An interactive learning game designed to make education fun and engaging. Combines curiosity, challenge, and discovery to reinforce concepts through play-based experiences.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UGC NET Info -->
+  <section id="ugcnet" class="py-16 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-4">About UGC NET</h2>
+    <p class="mb-4">The University Grants Commission – National Eligibility Test (UGC NET) is a prestigious national-level exam conducted by the National Testing Agency (NTA). It determines eligibility for:</p>
+    <ul class="list-disc pl-5 mb-4">
+      <li>Assistant Professor roles in Indian colleges and universities</li>
+      <li>Junior Research Fellowship (JRF) for advanced research and PhD programs</li>
+    </ul>
+    <p>Held twice a year, the exam includes:</p>
+    <ul class="list-disc pl-5">
+      <li>Paper I: Teaching & Research Aptitude</li>
+      <li>Paper II: Subject-specific questions</li>
+    </ul>
+    <p class="mt-4">Clearing UGC NET opens doors to academic careers and research opportunities across India.</p>
+  </section>
+
+  <!-- Batches -->
+  <section id="batches" class="py-16 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8 text-center">Current Batches</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+        <h3><strong>🛡️ SPARTANS Batch (UGC NET Paper I) 
+            Duration: 4 Months</strong></h3>
+       &nbsp; 
+        <ul class="list-disc pl-5 mb-4">
+          <li>50+ Hours of Recorded Sessions (Watch Anytime)</li>
+          <li>50+ Hours of Live Interactive Classes</li>
+          <li>Expert-Curated Study Materials</li>
+          <li>PYQs with Detailed Explanations</li>
+          <li>Weekly & Monthly Progress Tests</li>
+          <li>Realistic Mock Exams</li>
+          <li>Daily Doubt Clinics</li>
+          <li>Personal Mentorship</li>
+          <li>Smart Tip Videos (Alternate Days)</li>
+          <li>AI Tools for Smarter Preparation</li>
+          <li>Doubt Support via Live Chat, Classes & Forums</li>
+        </ul>
+        <a href="https://wa.me/+917510520532?text=Hey%2C%20I%27d%20like%20to%20know%20more%20about%20the%20SPARTANS%20Batch" target="_blank" class="bg-primary text-white px-4 py-2 rounded">Know More</a>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+        <h3><strong>🏹 JANISSARIES Batch (UGC NET English Paper II) – Duration: 4 Months</strong></h3>
+        &nbsp;
+        <ul class="list-disc pl-5 mb-4">
+          <li>40+ Hours of Recorded Sessions</li>
+          <li>40+ Hours of Live Analytical Classes</li>
+          <li>Syllabus-Aligned Study Materials</li>
+          <li>PYQs with Expert Explanations</li>
+          <li>Weekly & Monthly Assessments</li>
+          <li>Realistic Mock Exams</li>
+          <li>Daily Doubt Clinics</li>
+          <li>1-on-1 Mentorship</li>
+          <li>Smart Tip Videos (Alternate Days)</li>
+          <li>AI-Powered Learning Support</li>
+          <li>Doubt Resolution via Chat, Classes & Forums</li>
+        </ul>
+        <a href="https://wa.me/+917510520532?text=Hey%2C%20I%27d%20like%20to%20know%20more%20about%20the%20JANISSARIES%20Batch" target="_blank" class="bg-primary text-white px-4 py-2 rounded">Know More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section id="why-choose-us" class="py-16 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center">Why Choose Pixelearn?</h2>
+      <ul class="list-disc list-inside max-w-2xl mx-auto">
+        <li>🎓 High-Quality Classes by JRF Holders</li>
+        <li>📚 Systematic Study Plans</li>
+        <li>🤝 Personalized Mentoring</li>
+        <li>🧠 PYQ Discussions & Concept Clarity</li>
+        <li>📝 Point-to-Point Testing</li>
+        <li>💸 Affordable Fees</li>
+        <li>🏠 Convenient Online & Offline Modes</li>
+        <li>🌐 Bilingual Support: Malayalam & English</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="faculty" class="py-16 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8 text-center">Our Faculty</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8">
+        <div class="text-center"><img src="assets/faculty/shabab.jpeg" class="mx-auto rounded-full mb-4 h-32 w-32 object-cover"><h3><strong>Dr. Shabab Karunyam</strong></h3><p>UGC-JRF in Hindi. Submitted PhD thesis to the Department of Hindi, EFLU Hyderabad. Currently serving as the Assistant Professor of Hindi, JMC Trichy.</p></div>
+      <div class="text-center"><img src="assets/faculty/rafid.jpeg" class="mx-auto rounded-full mb-4 h-32 w-32 object-cover"><h3><strong>Dr. Rafid Chenadan</strong></h3><p>Submitted PhD thesis to the Department of Comparative Literature, EFLU Hyderabad. Assistant Professor at KL University, Hyderabad</p></div>
+      <div class="text-center"><img src="assets/faculty/shaheen.jpeg" class="mx-auto rounded-full mb-4 h-32 w-32 object-cover"><h3><strong>CP Shaheen Ahmed</strong></h3><p>UGC JRF in English. Research scholar at the Department of English Literature, EFLU Hyderabad.</p></div>
+      <div class="text-center"><img src="assets/faculty/khanza.jpeg" class="mx-auto rounded-full mb-4 h-32 w-32 object-cover"><h3><strong>Khanza Rahim</strong></h3><p>UGC JRF in Comparative Literature. Research scholar at the Department of Comparative Literature, Central University of Kerala.</p></div>
+      <div class="text-center"><img src="assets/faculty/vismaya.jpeg" class="mx-auto rounded-full mb-4 h-32 w-32 object-cover"><h3><strong>Vismaya Vijay</strong></h3><p>UGC JRF in English. Research scholar at the Department of English Literature, EFLU Hyderabad.</p></div>
+      <div class="text-center"><img src="assets/faculty/sreejith.jpeg" class="mx-auto rounded-full mb-4 h-32 w-32 object-cover"><h3><strong>Sreejith V</strong></h3><p>CSIR NET in Mathematics. Competitive exam trainer and mathematical and logical reasoning expert.</p></div>
+  </section>
+
+  <!-- Quick Contact Form -->
+  <section id="contact-form" class="py-16 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-4 max-w-lg">
+      <h2 class="text-2xl font-bold mb-4">Quick Contact</h2>
+      <form id="waForm" class="space-y-4">
+        <input type="text" id="name" placeholder="Your Name" class="w-full p-2 border rounded" />
+        <select id="mode" class="w-full p-2 border rounded">
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+        <input type="email" id="email" placeholder="Your Email" class="w-full p-2 border rounded" />
+        <button type="submit" class="bg-primary text-white px-4 py-2 rounded">Send via WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact Us -->
+  <section id="contact" class="py-16 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+    <ul class="space-y-2 mb-4">
+      <li>📍 Kerala, India</li>
+      <li>✉️ <a href='mailto:pixelearnedhub@gmail.com'>pixelearnedhub@gmail.com</a></li>
+      <li>📞 <a href="tel:+917510520532">+917510520532</a> </li>
+      <li>📷 <a href='https://instagram.com/pixe.learn'>  pixe.learn</a></li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-4 text-center">© 2025 Pixelearn Ed Hub. All rights reserved.</footer>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/+917510520532" target="_blank" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg flex items-center space-x-2"><span>💬</span><span class="hidden sm:inline">Chat</span></a>
+
+  <!-- Scripts -->
+  <script>
+    // WhatsApp form
+    document.getElementById('waForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const mode = document.getElementById('mode').value;
+      const email = document.getElementById('email').value;
+      const msg = `Hello, my name is ${name}. I am interested in ${mode} classes. My email is ${email}.`;
+      window.open(`https://wa.me/+917510520532?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    // Dark mode toggle fix
+    const toggle = document.getElementById('darkModeToggle');
+    const htmlEl = document.documentElement;
+    const darkIcon = document.getElementById('darkIcon');
+    const lightIcon = document.getElementById('lightIcon');
+    function setDarkMode(isDark) {
+      if (isDark) {
+        htmlEl.classList.add('dark');
+        localStorage.theme = 'dark';
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      } else {
+        htmlEl.classList.remove('dark');
+        localStorage.theme = 'light';
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      }
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setDarkMode(true);
+    } else {
+      setDarkMode(false);
+    }
+    toggle.addEventListener('click', () => {
+      setDarkMode(!htmlEl.classList.contains('dark'));
+    });
+
+    // Slider single image autoplay
+    const slides = document.querySelector('.slides');
+    const slideCount = slides.children.length;
+    let index = 0;
+    function showSlide(i) {
+      slides.style.transform = `translateX(${-i * 100}%)`;
+    }
+    document.querySelector('.next').addEventListener('click', () => {
+      index = (index + 1) % slideCount;
+      showSlide(index);
+    });
+    document.querySelector('.prev').addEventListener('click', () => {
+      index = (index - 1 + slideCount) % slideCount;
+      showSlide(index);
+    });
+    setInterval(() => {
+      index = (index + 1) % slideCount;
+      showSlide(index);
+    }, 5000);
+  </script>
+</body>
+</html>
