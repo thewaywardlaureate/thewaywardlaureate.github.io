@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pixelearn Ed Hub</title>
+  <meta name="description" content="Pixelearn Ed Hub" />
+  <script src="src/javascript/3.4.17.js"></script>
+
+  <!-- Stoked font (served from provided URL) -->
+  <link href="https://db.onlinewebfonts.com/c/84e83438bbc7a946793535fbfa8d4f9d?family=Stoked" rel="stylesheet" type="text/css"/>
+
+  <!-- Font Awesome (added here) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* -------------------------
+       Visual variables & font
+       ------------------------- */
+    :root {
+      --card-radius: 12px;
+      --card-padding: 0px;
+      --primary: #064e3b;
+      --hero-aspect: calc(1660 / 672); /* for reference in JS if needed */
+    }
+    html,body { font-family: 'Arial', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; padding:0; }
+
+    /* Minimal utility mappings so light classes work without Tailwind */
+    .bg-white { background-color: #ffffff; }
+    .bg-gray-50 { background-color: #f9fafb; }
+    .text-gray-900 { color: #111827; }
+    .text-gray-100 { color: #f3f4f6; }
+    .text-gray-200 { color: #e5e7eb; }
+
+    /* Card frame (common) */
+    .card-frame {
+      background: inherit;
+      border-radius: var(--card-radius);
+      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+      border: 0px solid rgba(0,0,0,0.04);
+      overflow: hidden;
+      padding: var(--card-padding);
+      box-sizing: border-box;
+    }
+
+    /* HERO carousel styles (full-bleed slider for 1660x672 posters) */
+    .hero-container {
+      max-width: none;
+      width: 100%;
+      margin: 0;
+      position: relative;
+      padding: 0;
+      overflow: hidden;
+      background: #ffffff; /* Changed from #000 to light gray to eliminate black area */
+    }
+    .hero-track { display:flex; transition: transform .7s ease-in-out; will-change: transform; }
+    .hero-slide { flex-shrink:0; display:flex; align-items:center; justify-content:center; box-sizing:border-box; min-width: 100vw; }
+
+    .img-wrap {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      height: auto;
+      overflow: hidden;
+      display: block;
+      position: relative;
+      /* Use the recommended aspect ratio: 1660 / 672 (CSS aspect-ratio supported browsers) */
+      aspect-ratio: 1660 / 672;
+      max-height: 100vh; /* prevent extremely tall on narrow viewports */
+      background: #f3f4f6;
+    }
+
+    /* keep .hero-bg in DOM but visually hidden */
+    .hero-bg { display: none !important; }
+
+    /* image fills the slide and uses cover to crop consistently across viewports */
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .caption { position:absolute; left:16px; right:16px; bottom:16px; z-index:3; display:flex; justify-content:center; pointer-events:auto; }
+    .caption-inner { background: rgba(255,255,255,0.92); padding:.6rem 1rem; border-radius:10px; max-width:88%; box-shadow:0 6px 18px rgba(15,23,42,0.06); text-align:center; font-weight:600; color:#0f172a; }
+    .caption-inner .cta { display:inline-block; margin-left:.6rem; padding:.35rem .7rem; border-radius:8px; background:var(--primary); color:#fff; text-decoration:none; font-weight:700; font-size:.875rem; }
+
+    .hero-dots { display:flex; gap:.5rem; justify-content:center; align-items:center; margin-top:.5rem; }
+    .hero-dot { width:10px; height:10px; border-radius:9999px; background:rgba(0,0,0,0.15); cursor:pointer; }
+    .hero-dot.active { background: rgba(0,0,0,0.65); }
+
+    /* Offset click zones for hero navigation */
+    .hero-zone { position:absolute; top:var(--card-padding); bottom:var(--card-padding); width: calc(var(--card-padding) + 32px); background:transparent; border:none; z-index:30; cursor:pointer; }
+    .hero-zone:focus { outline:2px solid rgba(59,130,246,0.45); border-radius:6px; }
+    .hero-zone.left-zone { left:0; } .hero-zone.right-zone { right:0; }
+
+    /* Faculty photos: zoom-in & rounded */
+    .faculty-photo { width:160px; height:160px; object-fit:cover; border-radius:9999px; display:block; margin:0 auto 1rem; }
+
+    /* Testimonials / Learners' stories base styles (kept from previous working version) */
+    .testi-frame { max-width:900px; margin:0 auto; padding:1rem; position: relative;
+      will-change: transform, opacity;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      isolation: isolate;
+    }
+
+    .testi-slide { opacity:0; transform:translateY(8px); transition: opacity .45s ease, transform .45s ease; position:absolute; left:0; top:0; width:100%; display:flex; align-items:center; justify-content:center; padding:2rem 1rem; box-sizing:border-box; }
+    .testi-slide .max-w-xl { min-height: 240px; display:flex; flex-direction:column; justify-content:flex-start; box-sizing:border-box; }
+    .testi-slide.active { opacity:1; transform:translateY(0); position:relative; }
+    .testi-dot { width:10px; height:10px; border-radius:9999px; background:#9ca3af; cursor:pointer; display:inline-block; }
+    .testi-dot.active { background:#3b82f6; }
+
+    .portrait { width:84px; height:84px; border-radius:9999px; object-fit:cover; display:block; margin:0 auto 0.75rem; }
+
+    .testi-controls { position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); display:flex; justify-content:space-between; padding:0 6px; box-sizing:border-box; pointer-events:none; z-index:6; }
+    .testi-controls button {
+      pointer-events:auto;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      width:40px;
+      height:40px;
+      border-radius:9999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      cursor:pointer;
+    }
+    .testi-controls button:focus { outline:2px solid rgba(59,130,246,0.35); }
+
+    /* Inputs readable - ensure select matches input sizes and shows arrow */
+    input[type="text"], input[type="email"], textarea {
+      background:#ffffff; color:#111827; border:1px solid rgba(0,0,0,0.12); padding:.6rem .75rem; border-radius:.375rem; width:100%; box-sizing:border-box;
+      min-height:44px; line-height:1.2;
+    }
+
+    /* Select: show an arrow (SVG) as background to be consistent across browsers, and ensure padding prevents overlap */
+    select {
+      background:#ffffff;
+      color:#111827;
+      border:1px solid rgba(0,0,0,0.12);
+      padding:.6rem .9rem .6rem .75rem; /* left/right padding so content isn't clipped */
+      border-radius:.375rem;
+      width:100%;
+      box-sizing:border-box;
+      min-height:44px;
+      line-height:1.2;
+      /* Add drop-down arrow using inline SVG for consistent rendering */
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path fill='%236b7280' d='M1 1l6 6 6-6' stroke='none' fill-rule='evenodd'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 14px 9px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input::placeholder { color:#9ca3af; }
+
+    /* NAV centering helper (only centers the menu options a bit on md+ screens) */
+    .container { position: relative; }
+    @media (min-width:768px) {
+      .nav-links { position: absolute; left: 50%; transform: translateX(-50%); }
+    }
+
+    /* CEO: responsive card layout (single change applied) */
+    .ceo-card {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 22px;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      border: 1px solid rgba(0,0,0,0.04);
+      box-sizing: border-box;
+    }
+    .ceo-left {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      padding-left:6px; /* small offset so image isn't flush to card edge */
+      box-sizing:border-box;
+    }
+    .ceo-left .faculty-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 9999px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      object-fit: cover;
+    }
+    .ceo-right { padding-right:6px; box-sizing:border-box; }
+    .ceo-title { margin:0 0 6px 0; font-size:1.375rem; font-weight:800; color:#0f172a; }
+    .ceo-name { margin:0 0 12px 0; color:#6b7280; font-weight:700; }
+    .ceo-body {
+      color:#0f172a;
+      line-height:1.75;
+      font-size:1.03rem;
+      max-width: none; /* allow comfortable width within the card column */
+      margin:0;
+      hyphens: auto;
+      text-rendering: optimizeLegibility;
+    }
+    .ceo-signature { margin-top:14px; font-weight:700; color: #064e3b; }
+
+    @media (max-width:767px) {
+      .ceo-card {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 18px;
+      }
+      .ceo-left { flex-direction: row; align-items:center; gap:12px; padding-left:0; }
+      .ceo-left .faculty-photo { width: 96px; height:96px; }
+      .ceo-name { margin-top:0; text-align:left; }
+      .ceo-title { text-align:left; }
+      .ceo-right { padding-right:0; }
+    }
+
+    .muted { color:#6b7280; } .bold { font-weight:700; }
+    .btn-accent { display:inline-block; background:var(--primary); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; }
+    .btn-accent.small { padding:6px 10px; border-radius:8px; font-weight:600; }
+
+    /* make sure FA icons in footer inherit white */
+    footer a .fa-brands { color: inherit; font-size: 18px; vertical-align: middle; }
+
+    /* ---------------------------
+       Scroll-snap testimonial CSS
+       --------------------------- */
+    .tl-wrap{ max-width:980px; margin:0 auto; padding: 0 16px; position: relative; }
+    .tl-title{ text-align:center; font-weight:800; font-size: 1.5rem; margin-bottom:14px; }
+
+    .tl-viewport{
+      overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch;
+      scroll-snap-type:x mandatory;
+      padding: 8px 12vw 24px;
+      /* hide visual scrollbar but allow scrolling/swiping */
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .tl-viewport::-webkit-scrollbar{ display:none; height:0; }
+
+    .tl-track{ display:flex; gap:16px; }
+    .tl-card{
+      scroll-snap-align:center;
+      flex:0 0 76vw; max-width:560px;
+      border:1px solid rgba(0,0,0,.06); border-radius:12px;
+      box-shadow: 0 8px 24px rgba(15,23,42,.08); background:#fff; padding:18px;
+      display:flex; flex-direction:column; justify-content:flex-start;
+      min-height:240px;
+    }
+    @media (min-width:768px){ .tl-card{ flex-basis:56vw; } }
+    @media (min-width:1024px){ .tl-card{ flex-basis:520px; } }
+    .tl-portrait{ width:84px; height:84px; border-radius:9999px; object-fit:cover; display:block; margin:0 auto 10px; }
+    .tl-name{ display:block; text-align:center; font-weight:700; }
+    .tl-text{ margin-top:10px; color:#6b7280; line-height:1.55; }
+    .tl-controls{ display:flex; justify-content:center; align-items:center; margin-top:8px; gap:8px; position:relative; }
+
+    .tl-btn{
+      width:40px; height:40px; border-radius:9999px; border:1px solid rgba(0,0,0,.1); background:#fff;
+      box-shadow: 0 8px 24px rgba(15,23,42,.08); cursor:pointer; font-size:20px; display:inline-flex; align-items:center; justify-content:center;
+    }
+    .tl-dots{ display:flex; gap:8px; justify-content:center; flex:0 0 auto; }
+    .tl-dot{ width:10px; height:10px; border-radius:9999px; background:#d1d5db; cursor:pointer; }
+    .tl-dot.active{ background:#111827; }
+
+    /* arrows floating at viewport edges relative to tl-wrap */
+    #tl-prev, #tl-next{
+      position:absolute; top:50%; transform:translateY(-50%); z-index:10; pointer-events:auto;
+      width:44px; height:44px; border-radius:9999px; display:flex; align-items:center; justify-content:center;
+      background:#fff; box-shadow:0 8px 24px rgba(15,23,42,.08); border:1px solid rgba(0,0,0,.06); cursor:pointer;
+    }
+    #tl-prev{ left:6px; }
+    #tl-next{ right:6px; }
+    @media (max-width:640px){
+      /* push arrows slightly inward on small screens so they don't overlap safe areas */
+      #tl-prev{ left:10px; } #tl-next{ right:10px; }
+    }
+
+    /* ===== Main menu (use Stoked font from provided URL, no wrapping) ===== */
+    .nav-links { gap: 1rem; flex-wrap: nowrap; display:flex; align-items:center; white-space:nowrap; }
+    .nav-links a { font-family: 'Stoked', 'Open Sans', Arial, sans-serif; font-weight: 400; font-size: 15px; white-space: nowrap; text-decoration: none; color: inherit; display:inline-block; padding:0 2px; }
+
+  </style>
+</head>
+
+<body class="bg-white text-gray-900">
+
+  <!-- NAVBAR (top labels per doc) -->
+  <nav class="fixed w-full bg-white z-50 shadow">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="#hero"><img src="assets/logo/logo.png" alt="Pixelearn logo" class="h-10 w-auto"></a>
+      </div>
+
+      <div class="hidden md:flex nav-links space-x-6 items-center">
+        <a href="#about" class="hover:text-primary"><strong>About Us</strong></a>
+        <a href="#courses" class="hover:text-primary"><strong>Courses Offered</strong></a>
+        <a href="#faculty" class="hover:text-primary"><strong>Faculty Club</strong></a>
+        <a href="#testimonials" class="hover:text-primary"><strong>Learners' Stories</strong></a>
+        <a href="#contact-form" class="hover:text-primary"><strong>Contact Us</strong></a>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <button id="mobileBurger" class="md:hidden p-2 rounded" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation" title="Open menu">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden fixed top-16 left-0 right-0 z-40 bg-white border-t border-gray-100 max-h-[calc(100vh-4rem)] overflow-auto">
+      <div class="px-4 py-3 space-y-2">
+        <a href="#about" class="block hover:text-primary"><strong>About Us</strong></a>
+        <a href="#courses" class="block hover:text-primary"><strong>Courses Offered</strong></a>
+        <a href="#faculty" class="block hover:text-primary"><strong>Faculty Club</strong></a>
+        <a href="#testimonials" class="block hover:text-primary"><strong>Learners' Stories</strong></a>
+        <a href="#contact-form" class="block hover:text-primary"><strong>Contact Us</strong></a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="height:64px"></div>
+
+  <!-- HERO: full-bleed consistent-aspect slider -->
+  <section id="hero" class="py-0">
+    <div class="hero-container">
+      <div id="heroTrack" class="hero-track" aria-live="polite">
+        <div class="hero-slide">
+          <div class="img-wrap">
+            <div class="hero-bg" style="background-image: url('assets/posters/slide1.jpg');"></div>
+            <img loading="lazy" src="assets/posters/slide1.jpg" alt="poster1">
+            <div class="caption"><div class="caption-inner">Want to crack December JRF? <a class="cta" href="#contact-form">Enroll Now</a></div></div>
+          </div>
+        </div>
+        <div class="hero-slide">
+          <div class="img-wrap">
+            <div class="hero-bg" style="background-image: url('assets/posters/poster2.jpg');"></div>
+            <img loading="lazy" src="assets/posters/poster2.jpg" alt="poster2">
+            <div class="caption"><div class="caption-inner">Secure early bird seats â€" English & Malayalam. <a class="cta" href="#contact-form">Know More</a></div></div>
+          </div>
+        </div>
+        <div class="hero-slide">
+          <div class="img-wrap">
+            <div class="hero-bg" style="background-image: url('assets/posters/poster3.jpg');"></div>
+            <img loading="lazy" src="assets/posters/poster3.jpg" alt="poster3">
+            <div class="caption"><div class="caption-inner">Join our skill-based programs. <a class="cta" href="#courses">Explore</a></div></div>
+          </div>
+        </div>
+        <div class="hero-slide">
+          <div class="img-wrap">
+            <div class="hero-bg" style="background-image: url('assets/posters/poster4.jpg');"></div>
+            <img loading="lazy" src="assets/posters/poster4.jpg" alt="poster4">
+            <div class="caption"><div class="caption-inner">AI-powered learning for future-ready skills. <a class="cta" href="#courses">See Courses</a></div></div>
+          </div>
+        </div>
+        <div class="hero-slide">
+          <div class="img-wrap">
+            <div class="hero-bg" style="background-image: url('assets/posters/poster5.jpg');"></div>
+            <img loading="lazy" src="assets/posters/poster5.jpg" alt="poster5">
+            <div class="caption"><div class="caption-inner">Interactive learning with expert faculty. <a class="cta" href="#faculty">Meet Faculty</a></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-dots" id="heroDots" style="margin-top:12px;">
+        <div class="hero-dot" data-index="0" role="button" aria-label="Go to slide 1"></div>
+        <div class="hero-dot" data-index="1" role="button" aria-label="Go to slide 2"></div>
+        <div class="hero-dot" data-index="2" role="button" aria-label="Go to slide 3"></div>
+        <div class="hero-dot" data-index="3" role="button" aria-label="Go to slide 4"></div>
+        <div class="hero-dot" data-index="4" role="button" aria-label="Go to slide 5"></div>
+      </div>
+
+      <button id="heroPrevZone" class="hero-zone left-zone" aria-label="Previous slide" title="Previous"></button>
+      <button id="heroNextZone" class="hero-zone right-zone" aria-label="Next slide" title="Next"></button>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-12 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-6">About Us</h2>
+    <p class="text-black-600 mb-6">
+      PIXELEARN Ed Hub is an academic initiative founded by a group of passionate educators and researchers, with the vision of transforming education into a dynamic, inclusive, and future-ready experience.
+      Designed for learners at every stage, the platform supports preparation for competitive exams, development of real-world skills, exploration of artificial intelligence, and solutions for academic challenges.
+      With expert guidance and innovative tools, Pixelearn empowers progressâ€"every pixel, every step.
+    </p>
+
+    <div class="card-frame mb-6">
+      <!-- CEO message: changed to responsive card with left image + right text (desktop),
+           stacked order on mobile (image & creds first, then message). This is the single change. -->
+      <div class="ceo-card" role="region" aria-labelledby="ceo-heading">
+        <div class="ceo-left" aria-hidden="false">
+          <img src="assets/exec/Jameel.jpg" alt="Jameel Ahammed CP - CEO" class="faculty-photo" loading="lazy">
+          <div class="ceo-meta">
+            <strong class="ceo-name">Jameel Ahammed CP</strong>
+            <div class="muted" style="text-align:center;">Chief Executive Officer</div>
+          </div>
+        </div>
+
+        <div class="ceo-right">
+          <h3 id="ceo-heading" class="ceo-title">Message from the CEO</h3>
+          <p class="ceo-body">
+            “At PIXELEARN Ed hub, our vision is to reimagine learning as a transformative, enduring pursuit—one that nurtures intellect, inspires curiosity, and equips individuals to navigate an increasingly complex world. Education, in our belief, must extend beyond the boundaries of examinations, fostering the capabilities, adaptability, and confidence essential for both personal growth and collective progress.
+            <br><br>
+            Every endeavour we undertake is shaped by a singular purpose: to bridge the distance between knowledge and its meaningful application. Through the synergy of expert mentorship, innovative methodologies, and a steadfast learner-centred ethos, we endeavour to accompany our learners on a path of continuous advancement.
+            <br><br>
+            In a time defined by rapid change, the willingness to learn, unlearn, and evolve is the most valuable skill of all. At Pixelearn, we are committed to walking alongside you on that journey.”
+          </p>
+          <div class="ceo-signature">— Jameel Ahammed CP</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card-frame text-center">
+        <img src="assets/exec/Shaheen.jpg" alt="Shaheen Ahmed CP - CAO" class="faculty-photo" loading="lazy">
+        <div class="bold">CAO</div>
+        <div class="muted">Shaheen Ahmed CP</div>
+      </div>
+      <div class="card-frame text-center">
+        <img src="assets/exec/Yaseen.jpg" alt="Yaseen Ra afath Ali KP - CTO" class="faculty-photo" loading="lazy">
+        <div class="bold">CTO</div>
+        <div class="muted">Yaseen Ra afath Ali KP</div>
+      </div>
+      <div class="card-frame text-center">
+        <img src="assets/exec/Ajsal.jpg" alt="Ajsal - CHRO" class="faculty-photo" loading="lazy">
+        <div class="bold">CHRO</div>
+        <div class="muted">Ajsal</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center">Courses Offered</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- UGC NET Coaching â€" now opens ugc-options.html in new window -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold mb-2">UGC NET Coaching</h3>
+          <p class="mb-4">Comprehensive coaching to prepare for UGC NET across both medium options and paper types. Click below for paper-wise options and details.</p>
+          <a href="ugc-options.html" target="_blank" rel="noopener noreferrer" class="btn-accent">View Options</a>
+        </div>
+
+        <!-- Hide & Seek -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold mb-2">Hide &amp; Seek</h3>
+          <p>A specialised program for students with learning difficulties, designed in consultation with psychologists. We identify each learnerâ€™s unique challenges through personalised assessments and create a tailored learning plan to match their needs. By focusing on individual strengths and targeted support, we help students overcome barriers and achieve measurable progress in their learning journey.</p>
+        </div>
+
+        <!-- AI-powered -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold mb-2">AI-Powered Learning Courses</h3>
+          <p>Innovative courses that integrate artificial intelligence into the learning process. Learners gain insights into AI tools, techniques, and applicationsâ€"enhancing study efficiency and future-readiness.</p>
+        </div>
+
+        <!-- Future Skill Lab -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold mb-2">Future Skill Lab</h3>
+          <p>Skill-based, practical training modules focused on building essential skills for academic, professional, and personal growth. Programs cover communication, reasoning, digital literacy, and more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACULTY CLUB -->
+  <section id="faculty" class="py-16 container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8 text-center">Faculty Club</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8">
+      <div class="text-center">
+        <img src="assets/faculty/shaheen.jpeg" alt="Shaheen Ahmed CP" class="faculty-photo" loading="lazy">
+        <h3><strong>Shaheen Ahmed CP</strong></h3>
+        <p class="muted">Secured UGC-JRF in English. Research scholar at the Department of English Literature, EFLU Hyderabad.</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/faculty/shabab.jpeg" alt="Dr. Shabab Karunyam" class="faculty-photo" loading="lazy">
+        <h3><strong>Dr. Shabab Karunyam</strong></h3>
+        <p class="muted">Secured UGC-JRF in Hindi and holds a doctoral degree from the Department of Hindi, EFLU Hyderabad. Currently serving as the Assistant Professor of Hindi, JMC Trichy.</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/faculty/rafid.jpeg" alt="Rafid Chenadan" class="faculty-photo" loading="lazy">
+        <h3><strong>Rafid Chenadan</strong></h3>
+        <p class="muted">Secured UGC-JRF in English and submitted PhD thesis to the Department of Comparative Literature, EFLU Hyderabad. Currently serving as Assistant Professor at KL University, Hyderabad.</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/faculty/amana.jpeg" alt="Amana Fayiza" class="faculty-photo" loading="lazy">
+        <h3><strong>Amana Fayiza</strong></h3>
+        <p class="muted">Secured UGC-JRF in English. Assistant Professor at JDT Islam College of Arts and Science</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/faculty/khanza.jpeg" alt="Khanza Rahim" class="faculty-photo" loading="lazy">
+        <h3><strong>Khanza Rahim</strong></h3>
+        <p class="muted">Secured UGC-JRF in Comparative Literature. Research Scholar at the Department of English and Comparative Literature, Central University of Kerala.</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/faculty/sreejith.jpeg" alt="Sreejith V" class="faculty-photo" loading="lazy">
+        <h3><strong>Sreejith V</strong></h3>
+        <p class="muted">Qualified CSIR-NET in Mathematics. Competitive exam trainer and expert in Mathematical and Logical Reasoning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNERS' STORIES (scroll-snap carousel with arrows + swipe; arrows hidden on mobile) -->
+  <section id="testimonials" class="py-12 bg-white">
+    <div class="card-frame testi-frame">
+      <div class="px-6 py-6">
+        <div class="tl-wrap" aria-label="Learners stories wrapper">
+          <h2 class="tl-title">Learners' Stories</h2>
+
+          <div class="tl-viewport" id="tl-viewport" tabindex="0" aria-label="Testimonials">
+            <div class="tl-track" id="tl-track">
+              <!-- 1 -->
+              <article class="tl-card">
+                <img class="tl-portrait" src="assets/testimonials/Sandra.jpg" alt="Sandra MJ" loading="lazy">
+                <strong class="tl-name">Sandra MJ, EFLU Hyderabad</strong>
+                <p class="tl-text">"After multiple attempts at qualifying JRF, each time missing it by just a few marks, I realised the gap was always in Paper 1. That’s when I joined Pixelearn. The classes here completely changed my approach — especially the sessions on Data Interpretation and Mathematical Reasoning. They were practical, engaging, and packed with plenty of practice, which helped me strengthen my weak areas. This time, I finally crossed the JRF line, and it feels rewarding to see the effort pay off with the support of Pixelearn."</p>
+              </article>
+
+              <!-- 2 -->
+              <article class="tl-card">
+                <img class="tl-portrait" src="assets/testimonials/Shaheeda.jpg" alt="Shaheeda" loading="lazy">
+                <strong class="tl-name">Shaheeda, Malappuram</strong>
+                <p class="tl-text">"Balancing family responsibilities with exam preparation was never easy. With children and a busy home life, finding time and focus felt like a constant struggle. I had been trying for years, but the journey often felt overwhelming. At Pixelearn, the personalised mentorship made all the difference. My mentor understood my schedule and learning pace, guiding me step by step. The continuous follow-ups kept me on track and motivated, even during tough days. It wasn’t just about classes — it was about having someone genuinely invested in my success. That support gave me the consistency and confidence I had been missing for so long."</p>
+              </article>
+
+              <!-- 3 -->
+              <article class="tl-card">
+                <img class="tl-portrait" src="assets/testimonials/Pooja.jpg" alt="Pooja" loading="lazy">
+                <strong class="tl-name">Pooja, NIT Calicut</strong>
+                <p class="tl-text">"Qualifying JRF in English had been my dream, and Pixelearn’s structured, detailed approach made it possible. Thorough sessions on each module, mock tests that reflected the real exam, and comprehensive study materials gave me the clarity and confidence to achieve it. The consistent guidance kept me focused, and the regular practice ensured steady improvement throughout my preparation."</p>
+              </article>
+
+              <!-- 4 -->
+              <article class="tl-card">
+                <img class="tl-portrait" src="assets/testimonials/Ajwad.jpg" alt="Ajwad Haneef" loading="lazy">
+                <strong class="tl-name">Ajwad Haneef, University of Hyderabad</strong>
+                <p class="tl-text">"The mock tests at Pixelearn were a game-changer for me. They familiarised me with the exact exam pattern and helped me manage my time effectively. The tips and tricks shared during the sessions made tackling tricky questions much easier. With consistent practice and smart strategies, I felt well-prepared and confident when it mattered most. The regular feedback after each test helped me focus on my weak areas, and over time, I could clearly see my progress"</p>
+              </article>
+
+              <!-- 5 -->
+              <article class="tl-card">
+                <img class="tl-portrait" src="assets/testimonials/Meghna.jpg" alt="Meghna" loading="lazy">
+                <strong class="tl-name">Meghna, Hyderabad</strong>
+                <p class="tl-text">"Pixelearn proved that quality learning doesn't have to come with a high price tag. The sessions were well-structured, engaging, and explained concepts with absolute clarity. Despite the affordable fee, the standard of teaching, resources, and support matched — and even surpassed — many expensive programs. It gave me access to top-quality preparation without straining my budget, and that made all the difference in my journey."</p>
+              </article>
+            </div>
+          </div>
+
+          <!-- floating arrows at viewport edges (visually at the far edges) -->
+          <button id="tl-prev" aria-label="Previous testimonial">‹</button>
+          <button id="tl-next" aria-label="Next testimonial">›</button>
+
+          <div class="tl-controls" aria-hidden="false" style="margin-top:18px;">
+            <div class="tl-dots" id="tl-dots" aria-label="Slide navigation"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Why Choose Us -->
+  <section id="why-choose-us" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center">Why Choose Pixelearn?</h2>
+      <ul class="list-disc list-inside max-w-2xl mx-auto">
+        <li> High-Quality Classes by JRF Holders</li>
+        <li> Systematic Study Plans</li>
+        <li> Personalized Mentoring</li>
+        <li> PYQ Discussions & Concept Clarity</li>
+        <li> Point-to-Point Testing</li>
+        <li> Affordable Fees</li>
+        <li> Convenient Online & Offline Modes</li>
+        <li> Bilingual Support: Malayalam & English</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM (kept from previous working iteration and adjusted select arrow/spacing) -->
+  <section id="contact-form" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-lg">
+      <h2 class="text-2xl font-bold mb-4">Quick Contact</h2>
+      <form id="waForm" class="space-y-4">
+        <input type="text" id="name" placeholder="Your Name" class="w-full" />
+        <select id="mode" class="w-full" aria-label="Mode of classes">
+          <option value="Online">&thinsp;Online</option>
+          <option value="Offline">&thinsp;Offline</option>
+          <option value="Hybrid">&thinsp;Hybrid</option>
+        </select>
+        <input type="email" id="email" placeholder="Your Email" class="w-full" />
+        <button type="submit" class="btn-accent">Send via WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="bg-gray-900 text-white py-6">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="flex items-start gap-4">
+        <div style="display:flex; flex-direction:column; align-items:flex-start;">
+          <img src="assets/logo/logo.png" alt="Pixelearn logo" style="height:64px" loading="lazy">
+          <div class="bold">Pixelearn Ed Hub</div>
+          <div style="margin-top:6px;">Palolithazham, Parannur, Narikkuni, Kozhikode, Kerala – 673585</div>
+          <div>Call: <a href="tel:+917510520532" class="text-white">+91 7510520532</a>, <a href="tel:+917510520533" class="text-white">+91 7510520533</a></div>
+          <div style="margin-top:6px;">
+            <a href="https://www.instagram.com/pixe.learn?igsh=MXNtcXJ3cjhreDFqMA==" target="_blank" style="margin-right:8px;" class="text-white" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/share/1VVZUKveoa/" target="_blank" style="margin-right:8px;" class="text-white" aria-label="Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://youtube.com/@pixelearnedhub?si=EbJqXvIUa-s_UcGU" target="_blank" class="text-white" aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+          </div>
+          <div style="margin-top:8px;"><a href="https://maps.app.goo.gl/ztLtJxiz6ttetqybA?g_st=aw" target="_blank"><i class="fa-solid fa-map-pin"></i> Find Us on Google Maps</a></div>
+        </div>
+      </div>
+
+      <div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">© 2025 Pixelearn Ed Hub. All rights reserved.</div>
+  </footer>
+
+  <a href="https://wa.me/+917510520532" target="_blank" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg flex items-center space-x-2">
+    <span><i class="fa-brands fa-whatsapp fa-xl"></i></span><span class="hidden sm:inline">Chat</span>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* WhatsApp form */
+    (function () {
+      const form = document.getElementById('waForm');
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value || '';
+        const mode = document.getElementById('mode').value || '';
+        const email = document.getElementById('email').value || '';
+        const msg = `Hello, my name is ${name}. I am interested in ${mode} classes. My email is ${email}.`;
+        window.open(`https://wa.me/+917510520532?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    })();
+
+    /* HREF: ensure Contact goes to #contact-form (id already present) */
+    (function () {
+      document.querySelectorAll('a[href="#contact"], a[href="#contact-form"]').forEach(a => a.setAttribute('href', '#contact-form'));
+    })();
+
+    /* Mobile menu toggle */
+    (function () {
+      const btn = document.getElementById('mobileBurger');
+      const menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        menu.classList.toggle('hidden');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+      });
+
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }));
+
+      document.addEventListener('click', (e) => {
+        if (menu.classList.contains('hidden')) return;
+        if (btn.contains(e.target) || menu.contains(e.target)) return;
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+
+    /* HERO carousel (full-bleed slides sized to viewport width) */
+    (function () {
+      const track = document.getElementById('heroTrack');
+      const dots = Array.from(document.querySelectorAll('.hero-dot'));
+      const prevZone = document.getElementById('heroPrevZone');
+      const nextZone = document.getElementById('heroNextZone');
+      if (!track || !dots.length) return;
+      const slides = Array.from(track.children);
+      let current = 0, autoplay = null;
+
+      function setSizes() {
+        // Ensure each slide is viewport width for full-bleed effect
+        const w = window.innerWidth || document.documentElement.clientWidth;
+        slides.forEach(s => { s.style.width = w + 'px'; });
+        track.style.width = (w * slides.length) + 'px';
+        track.style.transform = `translateX(-${current * w}px)`;
+      }
+
+      function goTo(i) {
+        const total = slides.length;
+        current = (i + total) % total;
+        const w = window.innerWidth || document.documentElement.clientWidth;
+        track.style.transform = `translateX(-${current * w}px)`;
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+      }
+
+      dots.forEach((d, idx) => d.addEventListener('click', () => { goTo(idx); start(); }));
+
+      let startX = 0;
+      track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stop(); }, { passive: true });
+      track.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) goTo(current + 1); else goTo(current - 1);
+        }
+        start();
+      }, { passive: true });
+
+      function start() { stop(); autoplay = setInterval(() => goTo(current + 1), 3500); }
+      function stop() { if (autoplay) clearInterval(autoplay); autoplay = null; }
+
+      window.addEventListener('resize', setSizes);
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      if (prevZone) prevZone.addEventListener('click', () => { goTo(current - 1); start(); });
+      if (nextZone) nextZone.addEventListener('click', () => { goTo(current + 1); start(); });
+
+      // init
+      setSizes(); goTo(0); start();
+    })();
+
+    /* TESTIMONIALS: scroll-snap implementation with arrows + swipe + hidden scrollbar
+       (unchanged from previous working iteration)
+    */
+    (function () {
+      const vp = document.getElementById('tl-viewport');
+      if (!vp) return;
+      const track = document.getElementById('tl-track');
+      const cards = Array.from(track.querySelectorAll('.tl-card'));
+      const dotsWrap = document.getElementById('tl-dots');
+      const prevBtn = document.getElementById('tl-prev');
+      const nextBtn = document.getElementById('tl-next');
+      let current = 0;
+      let scrollTimeout = null;
+
+      // Build dots
+      cards.forEach((_,i)=>{
+        const d=document.createElement('span');
+        d.className='tl-dot'+(i===0?' active':'');
+        d.setAttribute('role','button');
+        d.setAttribute('aria-label','Go to testimonial '+(i+1));
+        d.tabIndex = 0;
+        d.addEventListener('click',()=>center(i));
+        d.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); center(i);} });
+        dotsWrap.appendChild(d);
+      });
+
+      function updateDots(){
+        Array.from(dotsWrap.children).forEach((d,idx)=> d.classList.toggle('active', idx===current));
+      }
+
+      function center(i){
+        current = (i + cards.length) % cards.length;
+        const card = cards[current];
+        const vpWidth = vp.clientWidth;
+        const cardLeft = card.offsetLeft;
+        const cardWidth = card.clientWidth;
+        const target = Math.max(0, Math.round(cardLeft - (vpWidth - cardWidth) / 2));
+        vp.scrollTo({ left: target, behavior: 'smooth' });
+        updateDots();
+      }
+
+      // Allow touch swipe / pointer drag to change slides:
+      let touchStartX = 0;
+      let touchStartTime = 0;
+      vp.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) {
+          touchStartX = e.touches[0].clientX;
+          touchStartTime = Date.now();
+        }
+      }, { passive: true });
+
+      vp.addEventListener('touchend', (e) => {
+        const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : null;
+        if (endX == null) return;
+        const diff = touchStartX - endX;
+        const dt = Date.now() - touchStartTime;
+        // if quick swipe or sufficient distance, navigate
+        if (Math.abs(diff) > 50 && dt < 600) {
+          if (diff > 0) center(current + 1); else center(current - 1);
+        } else {
+          // else snap to nearest after scroll
+          snapToNearest();
+        }
+      }, { passive: true });
+
+      // Pointer (mouse) drag support for desktop
+      let pointerDown = false, pointerStartX = 0, pointerStartScroll = 0;
+      vp.addEventListener('pointerdown', (e) => {
+        pointerDown = true;
+        pointerStartX = e.clientX;
+        pointerStartScroll = vp.scrollLeft;
+        vp.setPointerCapture && vp.setPointerCapture(e.pointerId);
+      }, { passive: true });
+
+      vp.addEventListener('pointermove', (e) => {
+        if (!pointerDown) return;
+        // allow native drag-to-scroll (user sees movement)
+        const dx = pointerStartX - e.clientX;
+        vp.scrollLeft = pointerStartScroll + dx;
+      }, { passive: true });
+
+      vp.addEventListener('pointerup', (e) => {
+        if (!pointerDown) return;
+        pointerDown = false;
+        // Determine swipe direction
+        const dx = pointerStartX - e.clientX;
+        if (Math.abs(dx) > 80) {
+          if (dx > 0) center(current + 1); else center(current - 1);
+        } else {
+          snapToNearest();
+        }
+      });
+
+      // Snap to nearest helper (used after manual scroll)
+      function snapToNearest() {
+        const centerX = vp.scrollLeft + vp.clientWidth/2;
+        let best = 0, bestDist = Infinity;
+        cards.forEach((c,i)=>{
+          const cx = c.offsetLeft + c.clientWidth/2;
+          const d = Math.abs(cx - centerX);
+          if (d < bestDist){ best=i; bestDist=d; }
+        });
+        center(best);
+      }
+
+      // On scroll, update dot (debounced)
+      vp.addEventListener('scroll', ()=>{
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const centerX = vp.scrollLeft + vp.clientWidth/2;
+          let best = 0, bestDist = Infinity;
+          cards.forEach((c,i)=>{
+            const cx = c.offsetLeft + c.clientWidth/2;
+            const d = Math.abs(cx - centerX);
+            if (d < bestDist){ best = i; bestDist = d; }
+          });
+          if (best !== current) { current = best; updateDots(); }
+        }, 80);
+      }, { passive: true });
+
+      prevBtn.addEventListener('click', ()=>center(current-1));
+      nextBtn.addEventListener('click', ()=>center(current+1));
+
+      // Initial center and arrow positioning
+      window.addEventListener('load', ()=>{ center(0); });
+      window.addEventListener('resize', ()=>{ center(current); });
+
+      // Keyboard navigation left/right when viewport focused
+      vp.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); center(current-1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); center(current+1); }
+      });
+    })();
+
+  })();
+  </script>
+
+</body>
+</html>
+
