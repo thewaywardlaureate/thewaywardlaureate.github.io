@@ -8,6 +8,15 @@ on:
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,18 +25,20 @@ jobs:
         uses: gacts/directory-listing@v1
         with:
           target: ./IITD
-          # overwrite defaults to false, so any existing index.html here is safe
-          # ignore defaults to '**/index.html', so nested index files are also protected
 
       - name: Generate listing for EFLU
         uses: gacts/directory-listing@v1
         with:
           target: ./EFLU
-          # same defaults apply
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .          # publishes the entire repo root
-          publish_branch: gh-pages # deploys to the gh-pages branch
+        id: deployment
+        uses: actions/deploy-pages@v4
